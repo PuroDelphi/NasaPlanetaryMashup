@@ -30,7 +30,7 @@ type
     btShared: TSpeedButton;
     alPpal: TActionList;
     acShared: TShowShareSheetAction;
-    btTexto: TSpeedButton;
+    btFiltros: TSpeedButton;
     lyDetalleEdit: TLayout;
     Image1: TImage;
     SepiaEffect1: TSepiaEffect;
@@ -53,7 +53,7 @@ type
     procedure btBackClick(Sender: TObject);
     procedure btInfoClick(Sender: TObject);
     procedure acSharedBeforeExecute(Sender: TObject);
-    procedure btTextoClick(Sender: TObject);
+    procedure btFiltrosClick(Sender: TObject);
     procedure Image1Click(Sender: TObject);
     procedure Image4Click(Sender: TObject);
     procedure Image3Click(Sender: TObject);
@@ -62,7 +62,7 @@ type
     vlPresiona: TProc<TImage, TApod>;
     vlCurrent: Integer;
     function CreaGridPanel: TGridPanelLayout;
-    procedure CreaLinea(pFecha: TDate; pGridPanelLayout: TGridPanelLayout);
+    procedure CreaFila(pFecha: TDate; pGridPanelLayout: TGridPanelLayout);
   public
     { Public declarations }
   end;
@@ -83,9 +83,7 @@ begin
   lyDetalleInfo.Visible := not lyDetalleInfo.Visible;
 end;
 
-procedure TPpalFrm.btTextoClick(Sender: TObject);
-// var
-// mRect: TRectF;
+procedure TPpalFrm.btFiltrosClick(Sender: TObject);
 begin
   lyDetalleEdit.Visible := not lyDetalleEdit.Visible;
   lyDetalleInfo.Visible := False;
@@ -94,17 +92,6 @@ begin
   Image2.Bitmap := imgDetalle.Bitmap;
   Image3.Bitmap := imgDetalle.Bitmap;
   Image4.Bitmap := imgDetalle.Bitmap;
-
-  // imgDetalle.Bitmap.Canvas.BeginScene();
-  // imgDetalle.Bitmap.Canvas.Stroke.Kind := TBrushKind.bkSolid;
-  // imgDetalle.Bitmap.Canvas.StrokeThickness := 1;
-  // imgDetalle.Bitmap.Canvas.Fill.Color := TAlphaColors.Red;
-  // imgDetalle.Bitmap.Canvas.Font.Size := 40;
-  // mRect.Create(0, 0, 300, 250);
-  // imgDetalle.Bitmap.Canvas.FillText(mRect, 'Hello Text!', false, 100, [TFillTextFlag.ftRightToLeft],
-  // TTextAlign.taCenter, TTextAlign.taCenter);
-  //
-  // imgDetalle.Bitmap.Canvas.EndScene;
 end;
 
 function TPpalFrm.CreaGridPanel: TGridPanelLayout;
@@ -115,11 +102,12 @@ begin
   Result.Height := 150;
 end;
 
-procedure TPpalFrm.CreaLinea(pFecha: TDate; pGridPanelLayout: TGridPanelLayout);
-var
-  vTask: ITask;
+procedure TPpalFrm.CreaFila(pFecha: TDate; pGridPanelLayout: TGridPanelLayout);
+//var
+//  vTask: ITask;
 begin
-  vTask := TTask.Run(
+  //vTask :=
+  TTask.Run(
     procedure
     var
       vApod: TApod;
@@ -157,9 +145,9 @@ begin
         end;
 
         if vLP.ControlsCount = 1 then
-          CreaLinea(IncDay(pFecha, -1), vLP)
+          CreaFila(IncDay(pFecha, -1), vLP)
         else
-          CreaLinea(IncDay(pFecha, -1), nil);
+          CreaFila(IncDay(pFecha, -1), nil);
       end
       else
         TThread.Synchronize(TThread.CurrentThread,
@@ -234,7 +222,7 @@ end;
 procedure TPpalFrm.tmrPpalTimer(Sender: TObject);
 begin
   tmrPpal.Enabled := False;
-  CreaLinea(Date, nil);
+  CreaFila(Date, nil);
 end;
 
 end.

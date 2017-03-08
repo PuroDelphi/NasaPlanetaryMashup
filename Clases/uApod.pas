@@ -87,6 +87,7 @@ type
     function GetTitle: String;
     procedure SetApod(const pValue: TApod);
     procedure HaceClick(Sender: TObject);
+    procedure DecoImagen(pCodificado: String);
   public
     property OnPresiona: TProc<TImage, TApod> read FOnPresiona write FOnPresiona;
 
@@ -279,6 +280,27 @@ begin
   SetApod(pApod);
 end;
 
+procedure TApodCtrl.DecoImagen(pCodificado: String);
+var
+  vEncode, vDecode: TStringStream;
+begin
+  vEncode := TStringStream.Create(pCodificado);
+  try
+    vDecode := TStringStream.Create;
+
+    TNetEncoding.Base64.Decode(vEncode, vDecode);
+    vDecode.Position := 0;
+
+    TThread.Synchronize(TThread.CurrentThread,
+      procedure
+      begin
+        FImagen.Bitmap.LoadFromStream(vDecode);
+      end);
+  finally
+    vEncode.DisposeOf
+  end;
+end;
+
 destructor TApodCtrl.Destroy;
 begin
   FlbTitle.DisposeOf;
@@ -287,15 +309,14 @@ begin
 end;
 
 procedure TApodCtrl.DibujaImagen;
-var
-  vTask: ITask;
+// var
+// vTask: ITask;
 begin
   if FApod.Media_Type = 'image' then
   begin
-    vTask := TTask.Run(
+    // vTask :=
+    TTask.Run(
       procedure
-      var
-        vEncode, vDecode: TStringStream;
       begin
         FAni := TAniIndicator.Create(nil);
         try
@@ -313,20 +334,8 @@ begin
             TApodDB.Guarda(FApod);
           end;
 
-          vEncode := TStringStream.Create(FApod.FotoBin);
-          vDecode := TStringStream.Create;
-          try
-            TNetEncoding.Base64.Decode(vEncode, vDecode);
-            vDecode.Position := 0;
+          DecoImagen(FApod.FotoBin);
 
-            TThread.Synchronize(TThread.CurrentThread,
-              procedure
-              begin
-                FImagen.Bitmap.LoadFromStream(vDecode);
-              end);
-          finally
-            vEncode.DisposeOf;
-          end;
         finally
           TThread.Synchronize(TThread.CurrentThread,
             procedure
@@ -360,17 +369,8 @@ begin
   begin
     FlbTitle.Text := pValue.Title;
 
-    vEncode := TStringStream.Create(pValue.FotoBin);
-    try
-      vDecode := TStringStream.Create;
-
-      TNetEncoding.Base64.Decode(vEncode, vDecode);
-      vDecode.Position := 0;
-
-      FImagen.Bitmap.LoadFromStream(vDecode);
-    finally
-      vEncode.DisposeOf
-    end;
+    if pValue.FotoBin <> EmptyStr then
+      DecoImagen(FApod.FotoBin);
   end;
 end;
 
