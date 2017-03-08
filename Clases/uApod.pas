@@ -284,20 +284,23 @@ procedure TApodCtrl.DecoImagen(pCodificado: String);
 var
   vEncode, vDecode: TStringStream;
 begin
-  vEncode := TStringStream.Create(pCodificado);
-  try
-    vDecode := TStringStream.Create;
+  if pCodificado <> EmptyStr then
+  begin
+    vEncode := TStringStream.Create(pCodificado);
+    try
+      vDecode := TStringStream.Create;
 
-    TNetEncoding.Base64.Decode(vEncode, vDecode);
-    vDecode.Position := 0;
+      TNetEncoding.Base64.Decode(vEncode, vDecode);
+      vDecode.Position := 0;
 
-    TThread.Synchronize(TThread.CurrentThread,
-      procedure
-      begin
-        FImagen.Bitmap.LoadFromStream(vDecode);
-      end);
-  finally
-    vEncode.DisposeOf
+      TThread.Synchronize(TThread.CurrentThread,
+        procedure
+        begin
+          FImagen.Bitmap.LoadFromStream(vDecode);
+        end);
+    finally
+      vEncode.DisposeOf
+    end;
   end;
 end;
 
@@ -369,8 +372,7 @@ begin
   begin
     FlbTitle.Text := pValue.Title;
 
-    if pValue.FotoBin <> EmptyStr then
-      DecoImagen(FApod.FotoBin);
+    DecoImagen(FApod.FotoBin);
   end;
 end;
 
