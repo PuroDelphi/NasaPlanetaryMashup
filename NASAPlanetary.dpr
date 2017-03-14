@@ -4,7 +4,8 @@ uses
   System.StartUpCopy,
   FMX.Forms,
   PPal in 'PPal.pas' {PpalFrm},
-  uApod in 'Clases\uApod.pas';
+  uApod in 'Clases\uApod.pas',
+  uApodCtrl in 'Clases\uApodCtrl.pas';
 
 {$R *.res}
 

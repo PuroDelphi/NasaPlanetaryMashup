@@ -5,12 +5,12 @@ interface
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, IPPeerClient, REST.Client, Data.Bind.Components,
-  Data.Bind.ObjectScope, uApod, FMX.Controls.Presentation, FMX.StdCtrls, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  Data.Bind.ObjectScope, uApodCtrl, FMX.Controls.Presentation, FMX.StdCtrls, FireDAC.Stan.Intf, FireDAC.Stan.Option,
   FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async,
   FireDAC.Phys, FireDAC.Phys.SQLite, FireDAC.Phys.SQLiteDef, FireDAC.Stan.ExprFuncs, FireDAC.FMXUI.Wait, Data.DB,
   FireDAC.Comp.Client, FMX.Layouts, FMX.Objects, DateUtils, System.Threading, FMX.TabControl, FMX.ExtCtrls,
   FMX.ScrollBox, FMX.Memo, System.Actions, FMX.ActnList, FMX.StdActns, FMX.MediaLibrary.Actions, FMX.Colors, FMX.Edit,
-  FMX.Effects, FMX.Filter.Effects, FMX.DateTimeCtrls;
+  FMX.Effects, FMX.Filter.Effects, FMX.DateTimeCtrls, uApod;
 
 type
   TPpalFrm = class(TForm)
