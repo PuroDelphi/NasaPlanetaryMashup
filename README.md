@@ -1,6 +1,5 @@
 # NasaPlanetaryMashup
-Este es un proyecto que en principio es para para competir en https://community.embarcadero.com/competitions/14-fun-with-delphi-nasa-api-mash-up
-El proyecto sirve para ver las fotos del día de la NASA, a través de la API APOD, está centrado en la velocidad y espero poder meter más API 
-en este app.
+
+Este es un proyecto que sirve para ver la "foto del día" de la NASA a través de la API APOD, está creado con Firemonkey y ha sido creado pensado en el rendimiento de una app hecha con dicha biblioteca.
 
 www.purodelphi.com
